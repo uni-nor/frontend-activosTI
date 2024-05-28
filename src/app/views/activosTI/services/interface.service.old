@@ -1,0 +1,10 @@
+// import { Observable } from "rxjs";
+// import { ActivoModel } from "../models/activo.model";
+
+// export abstract class ServiceAbstract {
+//     /**
+//      * Returns a list of all of the current user's todos.
+//      */
+//     abstract eliminar(id:string): Observable<ActivoModel>;
+
+//   }

@@ -1,0 +1,173 @@
+
+<app-confirmar-eliminacion [(mostrarModalConfirmarEliminar)]="mostrarModalConfirmarEliminar" [id]="activo._id" (aceptarClick)="aceptarClickModalEliminar()" (cancelarClick)="cancelarClickModalEliminar()"></app-confirmar-eliminacion>
+
+<c-toaster [placement]="positionToast" class="p-3" position="fixed">
+    <c-toast
+      (timer)="onTimerChange($event)"
+      (visibleChange)="onVisibleChange($event)"
+      [visible]="visibleToast" color="primary" class="text-white">
+      <c-toast-header >
+        {{tituloToast}}
+      </c-toast-header>
+      <c-toast-body>
+        <p>{{mensajeToast}}</p>
+        <c-progress thin>
+          <c-progress-bar [value]="percentageToast"></c-progress-bar>
+        </c-progress>
+      </c-toast-body>
+    </c-toast>
+  </c-toaster>
+   
+
+<c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal" size="xl" [visible]="visibleModal" (visibleChange)="handleLiveDemoChange($event)">
+    <c-modal-header>
+        <h5 cModalTitle>Activo</h5>
+        <button [cModalToggle]="staticBackdropModal.id" cButtonClose color="danger"></button>
+    </c-modal-header>
+
+    <c-modal-body>
+        <c-row>
+            <c-col xs="12">
+                <form cForm class="row g-3">
+                    <c-col md="4">
+                        <label cLabel for="correlativo"><strong>Correlativo</strong></label>
+                        <input [(ngModel)]="activo.correlativo" cFormControl id="correlativo" name="correlativo"  placeholder="Correlativo"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="codigo"><strong>Codigo</strong></label>
+                        <input [(ngModel)]="activo.codigo" cFormControl id="codigo" name="codigo" placeholder="codigo"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="tipo"><strong>tipo</strong></label>
+                        <input [(ngModel)]="activo.tipo" cFormControl id="tipo" name="tipo" placeholder="tipo"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="descripcion"><strong>descripcion</strong></label>
+                        <input [(ngModel)]="activo.descripcion" cFormControl id="descripcion" name="descripcion" placeholder="descripcion" 
+                            type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="marca"><strong>marca</strong></label>
+                        <input [(ngModel)]="activo.marca" cFormControl id="marca" name="marca" placeholder="marca"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="modelo"><strong>modelo</strong></label>
+                        <input [(ngModel)]="activo.modelo" cFormControl id="modelo" name="modelo" placeholder="modelo"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="caracteristicas"><strong>caracteristicas</strong></label>
+                        <input [(ngModel)]="activo.caracteristicas" cFormControl id="caracteristicas"name="caracteristicas"
+                         placeholder="caracteristicas"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="color"><strong>color</strong></label>
+                        <input [(ngModel)]="activo.color" cFormControl id="color" name="color" placeholder="color"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="fecha_compra"><strong>fecha_compra</strong></label>
+                        <input [(ngModel)]="activo.fecha_compra" cFormControl id="fecha_compra" name="fecha_compra" placeholder="fecha_compra"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="fecha_baja"><strong>fecha_baja</strong></label>
+                        <input [(ngModel)]="activo.fecha_baja" cFormControl id="fecha_baja" name="fecha_baja" placeholder="fecha_baja" 
+                            type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="precio_bs"><strong>precio_bs</strong></label>
+                        <input [(ngModel)]="activo.precio_bs" cFormControl id="precio_bs" name="precio_bs" placeholder="precio_bs" 
+                            type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="titular"><strong>titular</strong></label>
+                        <select [(ngModel)]="activo.titular" id="titular" name="titular"  cSelect>
+                            <option>-Seleccione-</option>
+                            <option value="664279d362a71c50fb1a53db">Juan</option>
+                            <option value="Carlos">Two</option>
+                            <option value="Raul">Three</option>
+                        </select>
+                    </c-col>
+
+                </form>
+            </c-col>
+        </c-row>
+    </c-modal-body>
+
+    <c-modal-footer>
+        <button cButton color="primary" cTextColor="white" (click)="guardar()">Guardar</button>
+        <button (click)="botonCancelarModal()" cButton color="secondary">Cancelar</button>
+    </c-modal-footer>
+</c-modal>
+
+<c-row>
+    <c-col xs="12">
+        <button (click)="mostrarFormularioNuevo()" cButton class="mb-3">Nuevo</button>
+        <c-card class="mb-4">
+            <c-card-header>
+                <strong>ACTIVOS TI</strong>
+            </c-card-header>
+            <c-card-body>
+                <c-col xs="12">
+                    <table cTable [striped]="true" [responsive]="true" hover bordered>
+                        <thead cTableColor="dark">
+                            <tr>
+                                <th>Acciones</th>
+                                <!-- <th>#</th> -->
+                                <th>C.</th>
+                                <th>Código</th>
+                                <!-- <th>Tipo</th> -->
+                                <th>Descripcion</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Caracteristicas</th>
+                                <th>Color</th>
+                                <th>Fecha Compra</th>
+                                <th>Fecha Baja</th>
+                                <th>Titular</th>
+                                <th>Precio</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (a of activos; track $index) {
+                            <tr id="filaAct{{a._id}}">
+                                <td>
+                                    <button cButton (click)="mostrarEditar(a)" color="info" variant="outline">Editar</button>
+                                    <!-- <button [cModalToggle]="staticBackdropModal.id" cButtonClose color="danger"></button> -->
+                                    <button cButton (click)="mostrarConfirmarEliminar(a)" color="danger" variant="outline">Eliminar</button>
+                                </td>
+                                <!-- <th>{{$index}}</th> -->
+                                <td >{{a.correlativo}}</td>
+                                <td>{{a.codigo}}</td>
+                                <!-- <td>{{a.tipo}}</td> -->
+                                <td>{{a.descripcion}}</td>
+                                <td>{{a.marca}}</td>
+                                <td>{{a.modelo}}</td>
+                                <td>{{a.caracteristicas}}</td>
+                                <td>{{a.color}}</td>
+                                <td>{{a.fecha_compra}}</td>
+                                <td>{{a.fecha_baja}}</td>
+                                <td>{{a.titular}}</td>
+                                <td>{{a.precio_bs}}</td>
+                                
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </c-col>
+            </c-card-body>
+        </c-card>
+    </c-col>
+
+</c-row>

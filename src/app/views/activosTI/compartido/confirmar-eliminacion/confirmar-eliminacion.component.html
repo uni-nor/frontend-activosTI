@@ -1,0 +1,19 @@
+<c-modal #staticBackdropModalEliminar backdrop="static" id="staticBackdropModalEliminar" alignment="center" size="sm" [visible]="mostrarModalConfirmarEliminar" >
+    <c-modal-header class="bg-primary text-white">
+        <h5 cModalTitle>Activo</h5>
+        <button [cModalToggle]="staticBackdropModalEliminar.id" cButtonClose color="danger"></button>
+    </c-modal-header>
+
+    <c-modal-body>
+        <c-row>
+            <c-col xs="12">
+                Esta Seguro de eliminar el item con id: {{id}}
+            </c-col>
+        </c-row>
+    </c-modal-body>
+
+    <c-modal-footer>
+        <button cButton color="primary" cTextColor="white" (click)="eliminar()">Eliminar</button>
+        <button (click)="ocultarModalEliminar()" cButton color="secondary">Cancelar</button>
+    </c-modal-footer>
+</c-modal>
