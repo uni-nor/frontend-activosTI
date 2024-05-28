@@ -1,0 +1,77 @@
+
+<c-row>
+    <c-col xs="12">
+        <c-card-header>
+            <strong class="text-success">REPORTE DE SEGUIMIENTOS DE ACTIVOS</strong>
+        </c-card-header>
+        <c-card-body>
+            <form cForm class="row g-3">
+                <c-col md="12">
+                    <label cLabel for="Activos"><strong>Seleccione Activo</strong></label>
+                    <select id="activo" #act name="activo"  cSelect (change)="activoSeleccionado(act.value)" >
+                        <option value="todos" selected="selected">-Todos-</option>
+                        @for (x of activosLista; track $index) {
+                            <option value="{{x._id}}">{{x.modelo+" "+x.caracteristicas}}</option>    
+                        }
+                    </select>
+                </c-col>
+
+            </form>
+        </c-card-body>
+    </c-col>
+</c-row>
+
+<c-row>
+    <c-col xs="12">
+        <c-card class="mb-4">
+            <c-card-header>
+                <strong>CANTIDAD DE ACTIVOS:{{reporteSeguimiento?.cantidad_activos}}</strong>
+            </c-card-header>
+            <c-card-body>
+                <c-col xs="12">
+                    <table cTable  [responsive]="true" hover bordered>
+                        <thead cTableColor="dark">
+                            <tr>
+                                <th>ver</th>
+                                <th>Descripción</th>
+                                <th>Caracteristicas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (x of reporteSeguimiento?.seguimientoActivos; track $index) {
+                            <tr class="align-middle">
+                                <td><button (click)="mostrarOcultarSeguimiento(x.activo._id);" id="boton{{x.activo._id}}" cButton color="secondary">-</button></td>
+                                <td >{{x.activo.descripcion}}</td>
+                                <td>{{x.activo.caracteristicas}}</td>
+                            </tr>
+                            <tr id="filaSeguimiento{{x.activo._id}}" >
+                                <td class="bg-secondary" colspan="3">
+                                    <table cTable [responsive]="true" hover bordered>
+                                        <thead cTableColor="info">
+                                            <tr>
+                                                <th>fecha</th>
+                                                <th>Movimiento</th>
+                                                <th>Descripción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (s of x.seguimientos; track $index) {
+                                                <tr>
+                                                    <td>{{s.fecha}}</td>
+                                                    <td>{{s.movimiento}}</td>
+                                                    <td>{{s.descripcion}}</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </c-col>
+            </c-card-body>
+        </c-card>
+    </c-col>
+
+</c-row>

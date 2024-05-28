@@ -2,14 +2,12 @@ import { NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, ButtonDirective, FormSelectDirective, TableDirective, TableColorDirective, ModalComponent, ModalDialogComponent, ModalToggleDirective, ModalHeaderComponent, ModalBodyComponent, ModalFooterComponent, ButtonCloseDirective, ModalModule, ToastComponent, ToastHeaderComponent, ToastBodyComponent, ProgressBarComponent, ProgressBarDirective, ProgressComponent, ToasterComponent } from '@coreui/angular';
-import { ActivoModel } from '../models/activo.model';
-import { ActivoService } from '../services/activo.service';
-import { ConfirmarEliminacionComponent } from '../compartido/confirmar-eliminacion/confirmar-eliminacion.component';
-import { TitularService } from '../services/titular.service';
 import { TitularModel } from '../models/titular.model';
+import { TitularService } from '../services/titular.service';
+import { ConfirmarEliminacionComponent } from '../compartido/confirmar-eliminacion/confirmar-eliminacion.component';
 
 @Component({
-  selector: 'app-activo',
+  selector: 'app-titular',
   standalone: true,
   imports: [RowComponent, ColComponent, TextColorDirective, 
     CardComponent, CardHeaderComponent, CardBodyComponent,  
@@ -20,23 +18,20 @@ import { TitularModel } from '../models/titular.model';
     ModalComponent,ModalHeaderComponent,ModalBodyComponent,ModalFooterComponent,ModalToggleDirective,ButtonCloseDirective,
   ToasterComponent,ToastComponent,ToastHeaderComponent,ToastBodyComponent,ProgressBarComponent,ProgressBarDirective,ProgressComponent,
   ConfirmarEliminacionComponent],
-  templateUrl: './activo.component.html',
-  styleUrl: './activo.component.scss'
+  templateUrl: './titular.component.html',
+  styleUrl: './titular.component.scss'
 })
-export class ActivoComponent {
-  activos:ActivoModel[]=[];
-  activo:ActivoModel=new ActivoModel();
+export class TitularComponent {
+  titulares:TitularModel[]=[];
+  titular:TitularModel=new TitularModel();
   public visibleModal=false;
   mostrarModalConfirmarEliminar=false;
-  titularesLista:TitularModel[]=[];
-
-  constructor(private activoService:ActivoService,private titularService:TitularService) {
-    this.mostrarActivos();
-    this.llenarComboTitulares();
+  constructor(private titularService:TitularService) {
+    this.mostrarTitulares();
   }
 
   //toast
-  tituloToast="ACTIVO";
+  tituloToast="TITULAR";
   mensajeToast="hola";
   positionToast = 'top-end';
   visibleToast = false;
@@ -60,10 +55,10 @@ export class ActivoComponent {
   // ==============================================================================
     //LISTAR 
     // ==============================================================================
-  mostrarActivos(){
-    this.activoService.listar().subscribe({
+  mostrarTitulares(){
+    this.titularService.listar().subscribe({
       next:(res)=>{
-        this.activos=res;
+        this.titulares=res;
       },
       error:(error)=>{
         console.error(error);
@@ -75,12 +70,12 @@ export class ActivoComponent {
   //guardar crear o actualizar 
   // ==============================================================================
   guardar(){
-      if(this.activo._id==""){
+      if(this.titular._id==""){
         this.crear();
-        this.mensajeToast="Se creó el Activo";
+        this.mensajeToast="Se creó el Titular";
       }else{
         //actualizar
-        this.mensajeToast="Se modificó el Activo";
+        this.mensajeToast="Se modificó el Titular";
         this.modificar();
       }
       this.visibleModal = false;//ocultando modal
@@ -91,9 +86,9 @@ export class ActivoComponent {
   //crear
   // ==============================================================================
   crear(){
-    this.activoService.crear(this.activo).subscribe({
+    this.titularService.crear(this.titular).subscribe({
       next:(res)=>{
-        this.mostrarActivos();
+        this.mostrarTitulares();
       },
       error:(error)=>{
         console.error(error);
@@ -105,9 +100,9 @@ export class ActivoComponent {
   //modificar
   // ==============================================================================
   modificar(){
-    this.activoService.modificar(this.activo).subscribe({
+    this.titularService.modificar(this.titular).subscribe({
       next:(res)=>{
-        this.mostrarActivos();
+        this.mostrarTitulares();
       },
       error:(error)=>{
         console.error(error);
@@ -120,51 +115,48 @@ export class ActivoComponent {
   // ==============================================================================
   botonCancelarModal(){
     this.visibleModal=false;
-    this.mostrarActivos();// volver a cargar los registros, para descartar los cambios en modal
+    this.mostrarTitulares();// volver a cargar los registros, para descartar los cambios en modal
   }
 
   // ==============================================================================
   // MOSTRAR FORMULARIO PARA NUEVO REGISTRO
   // ==============================================================================
   mostrarFormularioNuevo(){
-    this.activo=new ActivoModel();
+    this.titular=new TitularModel();
     this.visibleModal=true;
   }
 
   // ==============================================================================
   // MOSTRAR FORMULARIO PARA MODIFICAR REGISTRO
   // ==============================================================================
-  mostrarEditar(a:ActivoModel){
-    this.activo=a;
+  mostrarEditar(a:TitularModel){
+    this.titular=a;
     this.visibleModal=true;
   }
 
   // ==============================================================================
-  //mostrar confirmar eliminar
+  //eliminar
   // ==============================================================================
-  mostrarConfirmarEliminar(a:ActivoModel){
-    this.activo=a;
+  mostrarConfirmarEliminar(a:TitularModel){
+    this.titular=a;
     this.mostrarModalConfirmarEliminar=true;
     // cambiando de color fila a eliminar
    this.cambiarfondoFila("pink")
   }
 
-  // ==============================================================================
-  //aceptar eliminacion
-  // ==============================================================================
   aceptarClickModalEliminar(){
-     const fila=document.getElementById("fila"+this.activo._id);
-     if(fila==null) return;
-     fila.style.opacity = "0";
-     fila.style.transition= "1.5s";
-     this.activoService.eliminar(this.activo._id).subscribe({
+      const fila=document.getElementById("fila"+this.titular._id);
+      if(fila==null) return;
+      fila.style.opacity = "0";
+      fila.style.transition= "1.5s";
+      this.titularService.eliminar(this.titular._id).subscribe({
       next:(res)=>{
         //this.mostrarActivos();
         this.cambiarfondoFila("red");
         setTimeout(() => {
-          for(let i=0;i<=this.activos.length-1;i++){
-            if(this.activos[i]._id==this.activo._id){
-              this.activos.splice(i,1);// elimina 1 elemento del vector a partir del indice indicado. esto para no traer todo el listado del servidor
+          for(let i=0;i<=this.titulares.length-1;i++){
+            if(this.titulares[i]._id==this.titular._id){
+              this.titulares.splice(i,1);// elimina 1 elemento del vector a partir del indice indicado. esto para no traer todo el listado del servidor
             }
           }    
           fila.remove();        
@@ -183,34 +175,14 @@ export class ActivoComponent {
     this.mostrarModalConfirmarEliminar=false;
   }
 
-  // ==============================================================================
-  //cancelar eliminar
-  // ==============================================================================
   cancelarClickModalEliminar(){
     this.cambiarfondoFila("");
     this.mostrarModalConfirmarEliminar=false;
   }
 
 
-  // ==============================================================================
-  //llenar combo titular para combo
-  // ==============================================================================
-  private llenarComboTitulares(){
-    this.titularService.listar().subscribe({
-      next:(res)=>{
-        this.titularesLista=res;
-      },
-      error:(error)=>{
-        console.error(error)
-      }
-    });
-  }
-
-  // ==============================================================================
-  // cambiar fondo de fila de tabla
-  // ==============================================================================
   private cambiarfondoFila(color:string){
-    document.querySelectorAll<HTMLElement>("#fila"+this.activo._id+" td").forEach(celda => {
+    document.querySelectorAll<HTMLElement>("#fila"+this.titular._id+" td").forEach(celda => {
       celda.style.backgroundColor=color;
     });
   }

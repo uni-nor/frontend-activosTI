@@ -20,9 +20,9 @@
    
 
 <c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal" size="xl" [visible]="visibleModal" (visibleChange)="handleLiveDemoChange($event)">
-    <c-modal-header>
+    <c-modal-header class="bg-primary text-white">
         <h5 cModalTitle>Activo</h5>
-        <button [cModalToggle]="staticBackdropModal.id" cButtonClose color="danger"></button>
+        <button [cModalToggle]="staticBackdropModal.id" cButtonClose class="bg-light"></button>
     </c-modal-header>
 
     <c-modal-body>
@@ -91,10 +91,10 @@
                     <c-col md="4">
                         <label cLabel for="titular"><strong>titular</strong></label>
                         <select [(ngModel)]="activo.titular" id="titular" name="titular"  cSelect>
-                            <option>-Seleccione-</option>
-                            <option value="664279d362a71c50fb1a53db">Juan</option>
-                            <option value="Carlos">Two</option>
-                            <option value="Raul">Three</option>
+                            <option value="" selected="{{activo._id==null?'selected':''}}">-Seleccione-</option>
+                            @for (t of titularesLista; track $index) {
+                                <option value="{{t._id}}" selected="{{activo._id==t._id?'selected':''}}" >{{t.nombre+" "+t.primer_apellido}}</option>    
+                            }
                         </select>
                     </c-col>
 
@@ -114,14 +114,13 @@
         <button (click)="mostrarFormularioNuevo()" cButton class="mb-3">Nuevo</button>
         <c-card class="mb-4">
             <c-card-header>
-                <strong>ACTIVOS TI</strong>
+                <strong class="text-success">ACTIVOS</strong>
             </c-card-header>
             <c-card-body>
                 <c-col xs="12">
                     <table cTable [striped]="true" [responsive]="true" hover bordered>
                         <thead cTableColor="dark">
                             <tr>
-                                <th>Acciones</th>
                                 <!-- <th>#</th> -->
                                 <th>C.</th>
                                 <th>Código</th>
@@ -135,17 +134,12 @@
                                 <th>Fecha Baja</th>
                                 <th>Titular</th>
                                 <th>Precio</th>
-                                
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @for (a of activos; track $index) {
-                            <tr id="filaAct{{a._id}}">
-                                <td>
-                                    <button cButton (click)="mostrarEditar(a)" color="info" variant="outline">Editar</button>
-                                    <!-- <button [cModalToggle]="staticBackdropModal.id" cButtonClose color="danger"></button> -->
-                                    <button cButton (click)="mostrarConfirmarEliminar(a)" color="danger" variant="outline">Eliminar</button>
-                                </td>
+                            <tr id="fila{{a._id}}">
                                 <!-- <th>{{$index}}</th> -->
                                 <td >{{a.correlativo}}</td>
                                 <td>{{a.codigo}}</td>
@@ -159,10 +153,13 @@
                                 <td>{{a.fecha_baja}}</td>
                                 <td>{{a.titular}}</td>
                                 <td>{{a.precio_bs}}</td>
-                                
+                                <td>
+                                    <button cButton (click)="mostrarEditar(a)" color="info" variant="outline">Editar</button>
+                                    <!-- <button [cModalToggle]="staticBackdropModal.id" cButtonClose color="danger"></button> -->
+                                    <button cButton (click)="mostrarConfirmarEliminar(a)" color="danger" variant="outline">Eliminar</button>
+                                </td>
                             </tr>
                             }
-
                         </tbody>
                     </table>
                 </c-col>

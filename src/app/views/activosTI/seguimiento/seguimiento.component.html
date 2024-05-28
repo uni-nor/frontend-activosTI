@@ -1,0 +1,117 @@
+
+<app-confirmar-eliminacion [(mostrarModalConfirmarEliminar)]="mostrarModalConfirmarEliminar" [id]="seguimiento._id" (aceptarClick)="aceptarClickModalEliminar()" (cancelarClick)="cancelarClickModalEliminar()"></app-confirmar-eliminacion>
+
+<c-toaster [placement]="positionToast" class="p-3" position="fixed">
+    <c-toast
+      (timer)="onTimerChange($event)"
+      (visibleChange)="onVisibleChange($event)"
+      [visible]="visibleToast" color="primary" class="text-white">
+      <c-toast-header >
+        {{tituloToast}}
+      </c-toast-header>
+      <c-toast-body>
+        <p>{{mensajeToast}}</p>
+        <c-progress thin>
+          <c-progress-bar [value]="percentageToast"></c-progress-bar>
+        </c-progress>
+      </c-toast-body>
+    </c-toast>
+  </c-toaster>
+   
+
+<c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal" size="xl" [visible]="visibleModal" (visibleChange)="handleLiveDemoChange($event)">
+    <c-modal-header class="bg-primary text-white">
+        <h5 cModalTitle>Seguimiento</h5>
+        <button [cModalToggle]="staticBackdropModal.id" cButtonClose class="bg-light"></button>
+    </c-modal-header>
+
+    <c-modal-body>
+        <c-row>
+            <c-col xs="12">
+                <form cForm class="row g-3">
+                    <c-col md="4">
+                        <label cLabel for="activo"><strong>activo</strong></label>
+                        <input [(ngModel)]="seguimiento.activo" cFormControl id="activo" name="activo" placeholder="activo"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="fecha"><strong>fecha</strong></label>
+                        <input [(ngModel)]="seguimiento.fecha" cFormControl id="fecha" name="fecha" placeholder="fecha"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="ubicacion_origen"><strong>ubicacion_origen</strong></label>
+                        <input [(ngModel)]="seguimiento.ubicacion_origen" cFormControl id="ubicacion_origen" name="ubicacion_origen" placeholder="ubicacion_origen" 
+                            type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="ubicacion_destino"><strong>ubicacion_destino</strong></label>
+                        <input [(ngModel)]="seguimiento.ubicacion_destino" cFormControl id="ubicacion_destino" name="ubicacion_destino" placeholder="ubicacion_destino"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="tipo_seguimiento"><strong>tipo_seguimiento</strong></label>
+                        <input [(ngModel)]="seguimiento.tipo_seguimiento" cFormControl id="tipo_seguimiento" name="tipo_seguimiento" placeholder="tipo_seguimiento"  type="text" />
+                    </c-col>
+
+                    <c-col md="4">
+                        <label cLabel for="descripcion"><strong>descripcion</strong></label>
+                        <input [(ngModel)]="seguimiento.descripcion" cFormControl id="descripcion" name="descripcion" placeholder="descripcion"  type="text" />
+                    </c-col>
+
+                </form>
+            </c-col>
+        </c-row>
+    </c-modal-body>
+
+    <c-modal-footer>
+        <button cButton color="primary" cTextColor="white" (click)="guardar()">Guardar</button>
+        <button (click)="botonCancelarModal()" cButton color="secondary">Cancelar</button>
+    </c-modal-footer>
+</c-modal>
+
+<c-row>
+    <c-col xs="12">
+        <button (click)="mostrarFormularioNuevo()" cButton class="mb-3">Nuevo</button>
+        <c-card class="mb-4">
+            <c-card-header>
+                <strong class="text-success">SEGUIMIENTOS</strong>
+            </c-card-header>
+            <c-card-body>
+                <c-col xs="12">
+                    <table cTable [striped]="true" [responsive]="true" hover bordered>
+                        <thead cTableColor="dark">
+                            <tr>
+                                <th>Activo</th>
+                                <th>fecha</th>
+                                <th>Ubi. Origen</th>
+                                <th>Ubi. Destino</th>
+                                <th>Tipo Seg.</th>
+                                <th>Descripcion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (x of seguimientos; track $index) {
+                            <tr id="fila{{x._id}}">
+                                <td>{{x.activo}}</td>
+                                <td>{{x.fecha}}</td>
+                                <td>{{x.ubicacion_origen}}</td>
+                                <td>{{x.ubicacion_destino}}</td>
+                                <td>{{x.tipo_seguimiento}}</td>
+                                <td>{{x.descripcion}}</td>
+                                <td>
+                                    <button cButton (click)="mostrarEditar(x)" color="info" variant="outline">Editar</button>
+                                    <button cButton (click)="mostrarConfirmarEliminar(x)" color="danger" variant="outline">Eliminar</button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </c-col>
+            </c-card-body>
+        </c-card>
+    </c-col>
+
+</c-row>

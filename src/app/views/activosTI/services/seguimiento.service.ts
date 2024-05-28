@@ -1,9 +1,9 @@
 import {HttpClient} from "@angular/common/http"
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ActivoModel } from "../models/activo.model";
+import { SeguimientoModel } from "../models/seguimiento.model";
+import { ReporteSeguimientoModel } from "../models/reporte-seguimiento.model";
 //import { ServiceAbstract } from "./interface.service";
-import { ReporteActivosTitularModel } from '../models/reporte-activos-titular.model';
 
 
 
@@ -11,47 +11,47 @@ import { ReporteActivosTitularModel } from '../models/reporte-activos-titular.mo
     providedIn:'root'
 })
 
-export class ActivoService{
+export class SeguimientoService{
     //URL BACKEND
-    private URL_API_BASE='http://localhost:5000/activos';
-    //private URL_LISTAR_ACTIVOS=URL_API_BASE+"/activos/listar";
+    private URL_API_BASE='http://localhost:5000/seguimiento';
+    //private URL_LISTAR_ACTIVOS=URL_API_BASE+"/seguimientos/listar";
     constructor(private http:HttpClient){       
     }
 
     // ==============================================================================
     //LISTAR 
     // ==============================================================================
-    listar():Observable<ActivoModel[]>{
-        return this.http.get<ActivoModel[]>(this.URL_API_BASE+"/listar")
+    listar():Observable<SeguimientoModel[]>{
+        return this.http.get<SeguimientoModel[]>(this.URL_API_BASE+"/listar")
     }
 
     // ==============================================================================
     // CREAR
     // ==============================================================================
-    crear(activo:ActivoModel):Observable<ActivoModel>{
-        return this.http.post<ActivoModel>(this.URL_API_BASE+"/crear",activo);
+    crear(seguimiento:SeguimientoModel):Observable<SeguimientoModel>{
+        return this.http.post<SeguimientoModel>(this.URL_API_BASE+"/crear",seguimiento);
     }
     // ==============================================================================
     // MODIFICAR
     // ==============================================================================
 
-    modificar(activo:ActivoModel):Observable<ActivoModel>{
-        return this.http.put<ActivoModel>(this.URL_API_BASE+"/modificar/"+activo._id,activo);
+    modificar(seguimiento:SeguimientoModel):Observable<SeguimientoModel>{
+        return this.http.put<SeguimientoModel>(this.URL_API_BASE+"/modificar/"+seguimiento._id,seguimiento);
     }
 
     // ==============================================================================
     // ELIMINAR
     // ==============================================================================
     
-    eliminar(id:string):Observable<ActivoModel>{
-        return this.http.delete<ActivoModel>(this.URL_API_BASE+"/eliminar/"+id);
+    eliminar(id:string):Observable<SeguimientoModel>{
+        return this.http.delete<SeguimientoModel>(this.URL_API_BASE+"/eliminar/"+id);
     }
 
     // ==============================================================================
     // LISTA DE ACTIVOS POR ID TITULAR
     // ==============================================================================
-    listaActivosPorTitular(id:string):Observable<ReporteActivosTitularModel>{
-        return this.http.get<ReporteActivosTitularModel>(this.URL_API_BASE+"/activos-por-titular/"+id);
+    reporteSeguimientoActivos(id:string):Observable<ReporteSeguimientoModel>{
+        return this.http.get<ReporteSeguimientoModel>(this.URL_API_BASE+"/reporte-seguimiento-activos/"+id);
     }
 
 }

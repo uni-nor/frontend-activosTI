@@ -1,0 +1,85 @@
+
+<c-row>
+    <c-col xs="12">
+        <c-card-header>
+            <strong class="text-success">REPORTE ACTIVOS POR TITULAR</strong>
+        </c-card-header>
+        <c-card-body>
+            <form cForm class="row g-3">
+                <c-col md="12">
+                    <label cLabel for="titular"><strong>Seleccione Titular</strong></label>
+                    <select id="titular" #tit name="titular"  cSelect (change)="titularSeleccionado(tit.value)" >
+                        <option value="todos" selected>-Todos-</option>
+                        @for (t of titularesLista; track $index) {
+                            <option value="{{t._id}}">{{t.nombre+" "+t.primer_apellido}}</option>    
+                        }
+                    </select>
+                </c-col>
+
+            </form>
+        </c-card-body>
+    </c-col>
+</c-row>
+
+<c-row>
+    <c-col xs="12">
+        <c-card class="mb-4">
+            <c-card-header>
+                <strong>CANTIDAD DE ACTIVOS:{{reporteActivo?.cantidadActivos}}</strong>
+            </c-card-header>
+            <c-card-body>
+                <c-col xs="12">
+                    <table cTable [striped]="true" [responsive]="true" hover bordered>
+                        <thead cTableColor="dark">
+                            <tr>
+                                <th>Correlativo</th>
+                                <th>Codigo</th>
+                                <th>Tipo</th>
+                                <th>Descripción</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Caracteristicas</th>
+                                <th>titular</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (x of reporteActivo?.activos; track $index) {
+                            <tr id="fila{{x._id}}">
+                                <td>{{x.correlativo}}</td>
+                                <td>{{x.codigo}}</td>
+                                <td>{{x.tipo}}</td>
+                                <td>{{x.descripcion}}</td>
+                                <td>{{x.marca}}</td>
+                                <td>{{x.modelo}}</td>
+                                <td>{{x.caracteristicas}}</td>
+                                <td>
+                                    <table cTable [responsive]="true" hover bordered>
+                                        <thead cTableColor="primary">
+                                            <tr>
+                                                <th>id</th>
+                                                <th>Nombre</th>
+                                                <th>Apellido1</th>
+                                                <th>Apellido2</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>{{x.titular._id}}</th>
+                                                <th>{{x.titular.nombre}}</th>
+                                                <th>{{x.titular.primer_apellido}}</th>
+                                                <th>{{x.titular.segundo_apellido}}</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </c-col>
+            </c-card-body>
+        </c-card>
+    </c-col>
+
+</c-row>

@@ -19,7 +19,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
       },
       {
-        path: 'activos',
+        path: 'activosti',
         loadChildren: () => import('./views/activosTI/routes').then((m) => m.routes)
       },
       {

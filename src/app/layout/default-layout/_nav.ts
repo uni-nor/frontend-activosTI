@@ -16,21 +16,44 @@ export const navItems: INavData[] = [
   //==============================================================
   {
     title: true,
-    name: 'INDICE ACTIVOS'
+    name: 'ACTIVOS TI'
   },
   {
-    name: 'ACTIVOS',
-    url: '/activos',
-    iconComponent: { name: 'cil-puzzle' },
+    name: 'Activos',
+    url: '/activosti/activos',
+    iconComponent: { name: 'cil-devices' }
+  },
+  {
+    name: 'Titulares',
+    url: '/activosti/titulares',
+    iconComponent: { name: 'cil-people' }
+  },
+  
+  {
+    name: 'Ubicaciones',
+    url: '/activosti/ubicaciones',
+    iconComponent: { name: 'cil-location-pin' }
+  },
+
+  {
+    name: 'Seguimientos',
+    url: '/activosti/seguimientos',
+    iconComponent: { name: 'cil-magnifying-glass' }
+  },
+
+  {
+    name: 'Reportes',
+    url: '/activosti',
+    iconComponent: { name: 'cil-spreadsheet' },
     children: [
       {
-        name: 'Lista Activos',
-        url: '/activos/listar',
+        name: 'Reporte Activos',
+        url: '/activosti/reporte-activos',
         icon: 'nav-icon-bullet'
       },
       {
-        name: 'reportes',
-        url: '/activos/resporte',
+        name: 'Reporte Seguimiento',
+        url: '/activosti/reporte-seguimiento',
         icon: 'nav-icon-bullet'
       },
     ]
