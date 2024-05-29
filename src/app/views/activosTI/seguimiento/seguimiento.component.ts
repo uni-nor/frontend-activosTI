@@ -5,6 +5,10 @@ import { RowComponent, ColComponent, TextColorDirective, CardComponent, CardHead
 import { SeguimientoModel } from '../models/seguimiento.model';
 import { SeguimientoService } from '../services/seguimiento.service';
 import { ConfirmarEliminacionComponent } from '../compartido/confirmar-eliminacion/confirmar-eliminacion.component';
+import { ActivoService } from '../services/activo.service';
+import { ActivoModel } from '../models/activo.model';
+import { UbicacionModel } from '../models/ubicacion.model';
+import { UbicacionService } from '../services/ubicacion.service';
 
 @Component({
   selector: 'app-seguimiento',
@@ -26,8 +30,41 @@ export class SeguimientoComponent {
   seguimiento:SeguimientoModel=new SeguimientoModel();
   public visibleModal=false;
   mostrarModalConfirmarEliminar=false;
-  constructor(private seguimientoService:SeguimientoService) {
+
+  activosLista:ActivoModel[]=[];
+  ubicacionLista:UbicacionModel[]=[];
+  constructor(private seguimientoService:SeguimientoService,private activoService:ActivoService,private ubicacionService:UbicacionService) {
     this.mostrarSeguimientos();
+    this.llenarComboActivos();
+    this.llenarComboUbicacion();
+  }
+
+  // ==============================================================================
+  //llenar combo titular para combo
+  // ==============================================================================
+  private llenarComboActivos(){
+    this.activoService.listar().subscribe({
+      next:(res)=>{
+        this.activosLista=res;
+      },
+      error:(error)=>{
+        console.error(error)
+      }
+    });
+  }
+
+   // ==============================================================================
+  //llenar combo titular para combo
+  // ==============================================================================
+  private llenarComboUbicacion(){
+    this.ubicacionService.listar().subscribe({
+      next:(res)=>{
+        this.ubicacionLista=res;
+      },
+      error:(error)=>{
+        console.error(error)
+      }
+    });
   }
 
   //toast
@@ -86,6 +123,8 @@ export class SeguimientoComponent {
   //crear
   // ==============================================================================
   crear(){
+    console.log(this.seguimiento);
+    this.seguimiento.usuario="664e9b3427820bd9a468f203";
     this.seguimientoService.crear(this.seguimiento).subscribe({
       next:(res)=>{
         this.mostrarSeguimientos();

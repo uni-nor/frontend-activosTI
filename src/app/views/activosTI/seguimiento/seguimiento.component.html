@@ -31,28 +31,50 @@
                 <form cForm class="row g-3">
                     <c-col md="4">
                         <label cLabel for="activo"><strong>activo</strong></label>
-                        <input [(ngModel)]="seguimiento.activo" cFormControl id="activo" name="activo" placeholder="activo"  type="text" />
+                        <!-- <input [(ngModel)]="seguimiento.activo" cFormControl id="activo" name="activo" placeholder="activo"  type="text" /> -->
+                        <select [(ngModel)]="seguimiento.activo" id="activo" #tit name="activo"  cSelect >
+                            <option value="" selected>-Seleccione-</option>
+                            @for (a of activosLista; track $index) {
+                                <option value="{{a._id}}">{{a.descripcion+" "+a.caracteristicas}}</option>    
+                            }
+                        </select>
                     </c-col>
 
                     <c-col md="4">
                         <label cLabel for="fecha"><strong>fecha</strong></label>
-                        <input [(ngModel)]="seguimiento.fecha" cFormControl id="fecha" name="fecha" placeholder="fecha"  type="text" />
+                        <input [(ngModel)]="seguimiento.fecha" cFormControl id="fecha" name="fecha" placeholder="fecha"  type="date" />
                     </c-col>
 
                     <c-col md="4">
                         <label cLabel for="ubicacion_origen"><strong>ubicacion_origen</strong></label>
-                        <input [(ngModel)]="seguimiento.ubicacion_origen" cFormControl id="ubicacion_origen" name="ubicacion_origen" placeholder="ubicacion_origen" 
-                            type="text" />
+                        <!-- <input [(ngModel)]="seguimiento.ubicacion_origen" cFormControl id="ubicacion_origen" name="ubicacion_origen" placeholder="ubicacion_origen" type="text" /> -->
+                        <select [(ngModel)]="seguimiento.ubicacion_origen" id="ubicacion_origen" name="ubicacion_origen"  cSelect >
+                            <option value="" selected>-Seleccione-</option>
+                            @for (x of ubicacionLista; track $index) {
+                                <option value="{{x._id}}">{{x.nombre+" "+x.descripcion}}</option>    
+                            }
+                        </select>
                     </c-col>
 
                     <c-col md="4">
                         <label cLabel for="ubicacion_destino"><strong>ubicacion_destino</strong></label>
-                        <input [(ngModel)]="seguimiento.ubicacion_destino" cFormControl id="ubicacion_destino" name="ubicacion_destino" placeholder="ubicacion_destino"  type="text" />
+                        <!-- <input [(ngModel)]="seguimiento.ubicacion_destino" cFormControl id="ubicacion_destino" name="ubicacion_destino" placeholder="ubicacion_destino"  type="text" /> -->
+                        <select [(ngModel)]="seguimiento.ubicacion_destino" id="ubicacion_destino" name="ubicacion_destino"  cSelect >
+                            <option value="" selected>-Seleccione-</option>
+                            @for (x of ubicacionLista; track $index) {
+                                <option value="{{x._id}}">{{x.nombre+" "+x.descripcion}}</option>    
+                            }
+                        </select>
                     </c-col>
 
                     <c-col md="4">
                         <label cLabel for="tipo_seguimiento"><strong>tipo_seguimiento</strong></label>
-                        <input [(ngModel)]="seguimiento.tipo_seguimiento" cFormControl id="tipo_seguimiento" name="tipo_seguimiento" placeholder="tipo_seguimiento"  type="text" />
+                        <!-- <input [(ngModel)]="seguimiento.tipo_seguimiento" cFormControl id="tipo_seguimiento" name="tipo_seguimiento" placeholder="tipo_seguimiento"  type="text" /> -->
+                        <select [(ngModel)]="seguimiento.tipo_seguimiento" id="tipo_seguimiento" name="tipo_seguimiento"  cSelect >
+                            <option value="" selected>-Seleccione-</option>
+                            <option value="MANTENIMIENTO">MANTENIMIENTO</option>    
+                            <option value="MOVIMIENTO">MOVIMIENTO</option>    
+                        </select>
                     </c-col>
 
                     <c-col md="4">

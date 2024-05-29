@@ -20,7 +20,7 @@
    
 
 <c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal" size="xl" [visible]="visibleModal" (visibleChange)="handleLiveDemoChange($event)">
-    <c-modal-header class="bg-primary text-white">
+    <c-modal-header class="bg-primary text-white py-1">
         <h5 cModalTitle>Activo</h5>
         <button [cModalToggle]="staticBackdropModal.id" cButtonClose class="bg-light"></button>
     </c-modal-header>
@@ -31,7 +31,7 @@
                 <form cForm class="row g-3">
                     <c-col md="4">
                         <label cLabel for="correlativo"><strong>Correlativo</strong></label>
-                        <input [(ngModel)]="activo.correlativo" cFormControl id="correlativo" name="correlativo"  placeholder="Correlativo"  type="text" />
+                        <input [(ngModel)]="activo.correlativo" cFormControl id="correlativo" name="correlativo"  placeholder="Correlativo"  type="number" />
                     </c-col>
 
                     <c-col md="4">
@@ -73,13 +73,13 @@
 
                     <c-col md="4">
                         <label cLabel for="fecha_compra"><strong>fecha_compra</strong></label>
-                        <input [(ngModel)]="activo.fecha_compra" cFormControl id="fecha_compra" name="fecha_compra" placeholder="fecha_compra"  type="text" />
+                        <input [(ngModel)]="activo.fecha_compra" cFormControl id="fecha_compra" name="fecha_compra" placeholder="fecha_compra"  type="date" />
                     </c-col>
 
                     <c-col md="4">
                         <label cLabel for="fecha_baja"><strong>fecha_baja</strong></label>
                         <input [(ngModel)]="activo.fecha_baja" cFormControl id="fecha_baja" name="fecha_baja" placeholder="fecha_baja" 
-                            type="text" />
+                            type="date" />
                     </c-col>
 
                     <c-col md="4">
